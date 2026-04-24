@@ -11,13 +11,9 @@ dependencies:
     sdk: flutter
   
   # 状态管理
-  provider: ^6.1.1
-  riverpod: ^2.4.9
   flutter_riverpod: ^2.4.9
   
   # 数据持久化
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
   shared_preferences: ^2.2.2
   
   # SSH连接
@@ -29,7 +25,6 @@ dependencies:
   
   # 图标和主题
   cupertino_icons: ^1.0.6
-  google_fonts: ^6.1.0
   flex_color_scheme: ^7.3.1
   
   # 工具类
@@ -45,8 +40,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
-  hive_generator: ^2.0.1
-  build_runner: ^2.4.8
 
 flutter:
   uses-material-design: true

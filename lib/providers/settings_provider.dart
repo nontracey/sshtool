@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ssh_tool/models/app_settings.dart';
 import 'package:ssh_tool/services/storage_service.dart';
+import 'package:ssh_tool/providers/hosts_provider.dart';
 
 final settingsProvider = StateNotifierProvider<SettingsNotifier, AppSettings>((ref) {
-  return SettingsNotifier(ref.read(storageServiceProvider));
+  return SettingsNotifier(ref.watch(storageServiceProvider));
 });
 
 class SettingsNotifier extends StateNotifier<AppSettings> {

@@ -1,62 +1,70 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ssh_tool/models/ssh_host.dart';
 import 'package:ssh_tool/models/app_settings.dart';
 
 class StorageService {
-  static const String hostsBox = 'ssh_hosts';
-  static const String settingsBox = 'app_settings';
-  
-  late Box<SshHost> _hostsBox;
-  late Box<AppSettings> _settingsBox;
-  
+  static const String hostsKey = 'ssh_hosts';
+  static const String settingsKey = 'app_settings';
+
+  late SharedPreferences _prefs;
+
   Future<void> init() async {
-    await Hive.initFlutter();
-    
-    Hive.registerAdapter(SshHostAdapter());
-    Hive.registerAdapter(AppSettingsAdapter());
-    
-    _hostsBox = await Hive.openBox<SshHost>(hostsBox);
-    _settingsBox = await Hive.openBox<AppSettings>(settingsBox);
+    _prefs = await SharedPreferences.getInstance();
   }
 
   List<SshHost> getAllHosts() {
-    return _hostsBox.values.toList();
+    final jsonString = _prefs.getString(hostsKey);
+    if (jsonString == null) return [];
+    final List<dynamic> jsonList = jsonDecode(jsonString);
+    return jsonList.map((json) => SshHost.fromJson(json)).toList();
   }
 
   List<SshHost> getHostsByGroup(String group) {
-    return _hostsBox.values.where((host) => host.group == group).toList();
+    return getAllHosts().where((host) => host.group == group).toList();
   }
 
   List<String> getAllGroups() {
-    return _hostsBox.values.map((host) => host.group).toSet().toList();
+    return getAllHosts().map((host) => host.group).toSet().toList();
   }
 
   Future<void> addHost(SshHost host) async {
-    await _hostsBox.put(host.id, host);
+    final hosts = getAllHosts();
+    hosts.add(host);
+    await _prefs.setString(hostsKey, jsonEncode(hosts.map((h) => h.toJson()).toList()));
   }
 
   Future<void> updateHost(SshHost host) async {
-    await _hostsBox.put(host.id, host);
+    final hosts = getAllHosts();
+    final index = hosts.indexWhere((h) => h.id == host.id);
+    if (index != -1) {
+      hosts[index] = host;
+      await _prefs.setString(hostsKey, jsonEncode(hosts.map((h) => h.toJson()).toList()));
+    }
   }
 
   Future<void> deleteHost(String id) async {
-    await _hostsBox.delete(id);
+    final hosts = getAllHosts();
+    hosts.removeWhere((h) => h.id == id);
+    await _prefs.setString(hostsKey, jsonEncode(hosts.map((h) => h.toJson()).toList()));
   }
 
   SshHost? getHost(String id) {
-    return _hostsBox.get(id);
+    return getAllHosts().firstWhere((h) => h.id == id, orElse: () => throw Exception('Not found'));
   }
 
   AppSettings getSettings() {
-    return _settingsBox.get('settings') ?? AppSettings();
+    final jsonString = _prefs.getString(settingsKey);
+    if (jsonString == null) return AppSettings();
+    return AppSettings.fromJson(jsonDecode(jsonString));
   }
 
   Future<void> saveSettings(AppSettings settings) async {
-    await _settingsBox.put('settings', settings);
+    await _prefs.setString(settingsKey, jsonEncode(settings.toJson()));
   }
 
   Future<void> clearAll() async {
-    await _hostsBox.clear();
-    await _settingsBox.clear();
+    await _prefs.remove(hostsKey);
+    await _prefs.remove(settingsKey);
   }
 }

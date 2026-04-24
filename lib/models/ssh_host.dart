@@ -1,46 +1,16 @@
-import 'package:hive/hive.dart';
-
-part 'ssh_host.g.dart';
-
-@HiveType(typeId: 0)
-class SshHost extends HiveObject {
-  @HiveField(0)
+class SshHost {
   String id;
-
-  @HiveField(1)
   String name;
-
-  @HiveField(2)
   String host;
-
-  @HiveField(3)
   int port;
-
-  @HiveField(4)
   String username;
-
-  @HiveField(5)
   String? password;
-
-  @HiveField(6)
   String? privateKey;
-
-  @HiveField(7)
   String group;
-
-  @HiveField(8)
   DateTime createdAt;
-
-  @HiveField(9)
   DateTime lastConnected;
-
-  @HiveField(10)
   int connectionCount;
-
-  @HiveField(11)
   String? color;
-
-  @HiveField(12)
   String? icon;
 
   SshHost({
@@ -89,6 +59,42 @@ class SshHost extends HiveObject {
       connectionCount: connectionCount ?? this.connectionCount,
       color: color ?? this.color,
       icon: icon ?? this.icon,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'host': host,
+      'port': port,
+      'username': username,
+      'password': password,
+      'privateKey': privateKey,
+      'group': group,
+      'createdAt': createdAt.toIso8601String(),
+      'lastConnected': lastConnected.toIso8601String(),
+      'connectionCount': connectionCount,
+      'color': color,
+      'icon': icon,
+    };
+  }
+
+  factory SshHost.fromJson(Map<String, dynamic> json) {
+    return SshHost(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      host: json['host'] ?? '',
+      port: json['port'] ?? 22,
+      username: json['username'] ?? '',
+      password: json['password'],
+      privateKey: json['privateKey'],
+      group: json['group'] ?? 'default',
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      lastConnected: DateTime.parse(json['lastConnected'] as String),
+      connectionCount: json['connectionCount'] ?? 0,
+      color: json['color'],
+      icon: json['icon'],
     );
   }
 }

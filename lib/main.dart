@@ -10,10 +10,10 @@ import 'package:ssh_tool/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   final storageService = StorageService();
   await storageService.init();
-  
+
   runApp(
     ProviderScope(
       overrides: [
@@ -30,7 +30,7 @@ class SshToolApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
-    
+
     return MaterialApp(
       title: 'SSH Tool',
       debugShowCheckedModeBanner: false,
@@ -42,9 +42,9 @@ class SshToolApp extends ConsumerWidget {
         '/': (context) => const HostListScreen(),
         '/settings': (context) => const SettingsScreen(),
       },
-      onGenerateRoute: (settings) {
-        if (settings.name == '/terminal') {
-          final host = settings.arguments as dynamic;
+      onGenerateRoute: (routeSettings) {
+        if (routeSettings.name == '/terminal') {
+          final host = routeSettings.arguments as dynamic;
           return MaterialPageRoute(
             builder: (context) => TerminalScreen(host: host),
           );

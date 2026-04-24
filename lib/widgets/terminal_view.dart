@@ -26,6 +26,15 @@ class _TerminalViewState extends State<TerminalView> {
   final _scrollController = ScrollController();
   final _focusNode = FocusNode();
   bool _autoScroll = true;
+  bool _isShiftPressed = false;
+  bool _isControlPressed = false;
+  bool _isAltPressed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.onKeyEvent = _handleKeyEvent;
+  }
 
   @override
   void didUpdateWidget(TerminalView oldWidget) {
@@ -47,27 +56,66 @@ class _TerminalViewState extends State<TerminalView> {
     }
   }
 
-  void _handleKeyEvent(KeyEvent event) {
+  KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
     if (event is KeyDownEvent) {
-      final key = event.logicalKey;
-      
-      String? sequence = KeyboardUtils.getSequence(
-        key,
-        shift: HardwareKeyboard.instance.isShiftPressed,
-        ctrl: HardwareKeyboard.instance.isControlPressed,
-        alt: HardwareKeyboard.instance.isAltPressed,
-      );
-      
-      if (sequence != null) {
-        widget.onInput(sequence);
-      } else if (key == LogicalKeyboardKey.keyC && HardwareKeyboard.instance.isControlPressed) {
-        widget.onInput('\x03');
-      } else if (key == LogicalKeyboardKey.keyD && HardwareKeyboard.instance.isControlPressed) {
-        widget.onInput('\x04');
-      } else if (key == LogicalKeyboardKey.keyZ && HardwareKeyboard.instance.isControlPressed) {
-        widget.onInput('\x1a');
+      if (event.logicalKey == LogicalKeyboardKey.shiftLeft ||
+          event.logicalKey == LogicalKeyboardKey.shiftRight) {
+        _isShiftPressed = true;
+        return KeyEventResult.handled;
+      }
+      if (event.logicalKey == LogicalKeyboardKey.controlLeft ||
+          event.logicalKey == LogicalKeyboardKey.controlRight) {
+        _isControlPressed = true;
+        return KeyEventResult.handled;
+      }
+      if (event.logicalKey == LogicalKeyboardKey.altLeft ||
+          event.logicalKey == LogicalKeyboardKey.altRight) {
+        _isAltPressed = true;
+        return KeyEventResult.handled;
+      }
+    } else if (event is KeyUpEvent) {
+      if (event.logicalKey == LogicalKeyboardKey.shiftLeft ||
+          event.logicalKey == LogicalKeyboardKey.shiftRight) {
+        _isShiftPressed = false;
+        return KeyEventResult.handled;
+      }
+      if (event.logicalKey == LogicalKeyboardKey.controlLeft ||
+          event.logicalKey == LogicalKeyboardKey.controlRight) {
+        _isControlPressed = false;
+        return KeyEventResult.handled;
+      }
+      if (event.logicalKey == LogicalKeyboardKey.altLeft ||
+          event.logicalKey == LogicalKeyboardKey.altRight) {
+        _isAltPressed = false;
+        return KeyEventResult.handled;
       }
     }
+
+    if (event is KeyDownEvent) {
+      final key = event.logicalKey;
+
+      String? sequence = KeyboardUtils.getSequence(
+        key,
+        shift: _isShiftPressed,
+        ctrl: _isControlPressed,
+        alt: _isAltPressed,
+      );
+
+      if (sequence != null) {
+        widget.onInput(sequence);
+        return KeyEventResult.handled;
+      } else if (key == LogicalKeyboardKey.keyC && _isControlPressed) {
+        widget.onInput('\x03');
+        return KeyEventResult.handled;
+      } else if (key == LogicalKeyboardKey.keyD && _isControlPressed) {
+        widget.onInput('\x04');
+        return KeyEventResult.handled;
+      } else if (key == LogicalKeyboardKey.keyZ && _isControlPressed) {
+        widget.onInput('\x1a');
+        return KeyEventResult.handled;
+      }
+    }
+    return KeyEventResult.ignored;
   }
 
   @override
@@ -81,7 +129,6 @@ class _TerminalViewState extends State<TerminalView> {
               onTap: () => _focusNode.requestFocus(),
               child: KeyboardListener(
                 focusNode: _focusNode,
-                onKeyEvent: _handleKeyEvent,
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
                     if (notification is ScrollUpdateNotification) {
@@ -123,7 +170,7 @@ class _TerminalViewState extends State<TerminalView> {
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
         border: Border(
           top: BorderSide(
             color: Theme.of(context).dividerColor,

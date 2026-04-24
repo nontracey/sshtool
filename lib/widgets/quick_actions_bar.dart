@@ -17,7 +17,7 @@ class QuickActionsBar extends StatelessWidget {
     return Container(
       height: 56,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
         border: Border(
           top: BorderSide(
             color: Theme.of(context).dividerColor,

@@ -1,55 +1,21 @@
-import 'package:hive/hive.dart';
+import 'package:flutter/material.dart';
 
-part 'app_settings.g.dart';
-
-@HiveType(typeId: 1)
-class AppSettings extends HiveObject {
-  @HiveField(0)
+class AppSettings {
   ThemeMode themeMode;
-
-  @HiveField(1)
   String themeColor;
-
-  @HiveField(2)
   String fontFamily;
-
-  @HiveField(3)
   double fontSize;
-
-  @HiveField(4)
   double lineHeight;
-
-  @HiveField(5)
   int cursorStyle;
-
-  @HiveField(6)
   bool bellSound;
-
-  @HiveField(7)
   bool vibrateOnBell;
-
-  @HiveField(8)
   int scrollbackLines;
-
-  @HiveField(9)
   bool keepScreenOn;
-
-  @HiveField(10)
   bool fullscreenMode;
-
-  @HiveField(11)
   String terminalFontFamily;
-
-  @HiveField(12)
   double terminalFontSize;
-
-  @HiveField(13)
   bool showLineNumbers;
-
-  @HiveField(14)
   String encoding;
-
-  @HiveField(15)
   int connectionTimeout;
 
   AppSettings({
@@ -108,10 +74,46 @@ class AppSettings extends HiveObject {
       connectionTimeout: connectionTimeout ?? this.connectionTimeout,
     );
   }
-}
 
-enum ThemeMode {
-  system,
-  light,
-  dark,
+  Map<String, dynamic> toJson() {
+    return {
+      'themeMode': themeMode.name,
+      'themeColor': themeColor,
+      'fontFamily': fontFamily,
+      'fontSize': fontSize,
+      'lineHeight': lineHeight,
+      'cursorStyle': cursorStyle,
+      'bellSound': bellSound,
+      'vibrateOnBell': vibrateOnBell,
+      'scrollbackLines': scrollbackLines,
+      'keepScreenOn': keepScreenOn,
+      'fullscreenMode': fullscreenMode,
+      'terminalFontFamily': terminalFontFamily,
+      'terminalFontSize': terminalFontSize,
+      'showLineNumbers': showLineNumbers,
+      'encoding': encoding,
+      'connectionTimeout': connectionTimeout,
+    };
+  }
+
+  factory AppSettings.fromJson(Map<String, dynamic> json) {
+    return AppSettings(
+      themeMode: ThemeMode.values.byName(json['themeMode'] ?? 'system'),
+      themeColor: json['themeColor'] ?? 'blue',
+      fontFamily: json['fontFamily'] ?? 'Roboto',
+      fontSize: (json['fontSize'] as num?)?.toDouble() ?? 14.0,
+      lineHeight: (json['lineHeight'] as num?)?.toDouble() ?? 1.5,
+      cursorStyle: json['cursorStyle'] ?? 0,
+      bellSound: json['bellSound'] ?? true,
+      vibrateOnBell: json['vibrateOnBell'] ?? false,
+      scrollbackLines: json['scrollbackLines'] ?? 10000,
+      keepScreenOn: json['keepScreenOn'] ?? true,
+      fullscreenMode: json['fullscreenMode'] ?? false,
+      terminalFontFamily: json['terminalFontFamily'] ?? 'JetBrainsMono',
+      terminalFontSize: (json['terminalFontSize'] as num?)?.toDouble() ?? 14.0,
+      showLineNumbers: json['showLineNumbers'] ?? false,
+      encoding: json['encoding'] ?? 'UTF-8',
+      connectionTimeout: json['connectionTimeout'] ?? 30,
+    );
+  }
 }

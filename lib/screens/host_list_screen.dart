@@ -468,10 +468,11 @@ class _AddHostDialogState extends State<AddHostDialog> {
       createdAt: widget.host?.createdAt,
     );
     
+    final notifier = ProviderScope.containerOf(context).read(hostsProvider.notifier);
     if (widget.host == null) {
-      context.read(hostsProvider.notifier).addHost(host);
+      notifier.addHost(host);
     } else {
-      context.read(hostsProvider.notifier).updateHost(host);
+      notifier.updateHost(host);
     }
     
     Navigator.pop(context);

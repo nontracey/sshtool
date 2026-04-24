@@ -1,6 +1,4 @@
-import 'dart:ui';
-import 'package:flutter/material.dart';
-import 'package:ssh_tool/theme/terminal_colors.dart';
+import 'dart:math';
 
 class TerminalBuffer {
   final List<String> _lines = [];
@@ -146,6 +144,6 @@ class TerminalBuffer {
   }
 
   void scroll(int offset) {
-    _scrollOffset = (_scrollOffset + offset).clamp(0, (_lines.length - 25).max(0));
+    _scrollOffset = (_scrollOffset + offset).clamp(0, max(_lines.length - 25, 0));
   }
 }

@@ -1,21 +1,21 @@
 import 'package:flutter/services.dart';
 
 class KeyboardUtils {
-  static const Map<LogicalKeyboardKey, String> specialKeys = {
+  static final Map<LogicalKeyboardKey, String> specialKeys = {
     LogicalKeyboardKey.escape: '\x1b',
     LogicalKeyboardKey.tab: '\t',
     LogicalKeyboardKey.enter: '\n',
     LogicalKeyboardKey.backspace: '\x7f',
   };
 
-  static const Map<LogicalKeyboardKey, String> arrowSequences = {
+  static final Map<LogicalKeyboardKey, String> arrowSequences = {
     LogicalKeyboardKey.arrowUp: '\x1b[A',
     LogicalKeyboardKey.arrowDown: '\x1b[B',
     LogicalKeyboardKey.arrowRight: '\x1b[C',
     LogicalKeyboardKey.arrowLeft: '\x1b[D',
   };
 
-  static const Map<LogicalKeyboardKey, String> functionSequences = {
+  static final Map<LogicalKeyboardKey, String> functionSequences = {
     LogicalKeyboardKey.f1: '\x1bOP',
     LogicalKeyboardKey.f2: '\x1bOQ',
     LogicalKeyboardKey.f3: '\x1bOR',

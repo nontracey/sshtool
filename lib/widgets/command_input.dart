@@ -94,7 +94,7 @@ class _CommandInputState extends State<CommandInput> {
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,

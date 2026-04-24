@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -157,9 +156,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
         return;
     }
     
-    if (sequence != null) {
-      _sshService.write(sequence);
-    }
+    _sshService.write(sequence!);
   }
 
   @override
@@ -213,7 +210,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
@@ -313,7 +310,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
               decoration: InputDecoration(
                 hintText: 'Enter command',
                 filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
@@ -343,8 +340,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-      ),
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
