@@ -17,7 +17,7 @@ dependencies:
   shared_preferences: ^2.2.2
   
   # SSH连接
-  dartssh2: ^2.0.0
+  dartssh2: ^2.14.0
   
   # UI组件
   flutter_slidable: ^3.0.1
@@ -25,11 +25,11 @@ dependencies:
   
   # 图标和主题
   cupertino_icons: ^1.0.6
-  flex_color_scheme: ^7.3.1
+  flex_color_scheme: ^8.4.0
   
   # 工具类
   uuid: ^4.2.2
-  intl: ^0.18.1
+  intl: ^0.20.2
   path_provider: ^2.1.2
   
   # 加密
@@ -39,7 +39,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
