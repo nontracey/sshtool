@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:dartssh2/dartssh2.dart';
 import 'package:ssh_tool/models/ssh_host.dart';
 
 class SshService {
   SSHClient? _client;
-  SSHChannel? _shellChannel;
+  SSHSession? _shellSession;
   StreamController<String>? _outputController;
   StreamController<String>? _errorController;
 
@@ -42,41 +41,41 @@ class SshService {
   Future<void> startShell() async {
     if (_client == null) throw Exception('Not connected');
 
-    _shellChannel = _client!.shell(
+    _shellSession = await _client!.shell(
       pty: const SSHPtyConfig(
         width: 80,
         height: 24,
       ),
     );
 
-    _shellChannel!.stdout
-        .transform(utf8.decoder)
+    _shellSession!.stdout
+        .map((data) => utf8.decode(data))
         .listen((data) {
           _outputController?.add(data);
         });
 
-    _shellChannel!.stderr
-        .transform(utf8.decoder)
+    _shellSession!.stderr
+        .map((data) => utf8.decode(data))
         .listen((data) {
           _errorController?.add(data);
         });
   }
 
   void write(String data) {
-    if (_shellChannel == null) return;
-    _shellChannel!.write(utf8.encode(data));
+    if (_shellSession == null) return;
+    _shellSession!.write(utf8.encode(data));
   }
 
   void resize(int width, int height) {
-    if (_shellChannel == null) return;
-    _shellChannel!.resizeTerminal(width, height, 0, 0);
+    if (_shellSession == null) return;
+    _shellSession!.resizeTerminal(width, height);
   }
 
   Future<void> disconnect() async {
-    _shellChannel?.close();
-    _client?.close();
+    _shellSession?.stdin.close();
+    _client?.socket.close();
 
-    _shellChannel = null;
+    _shellSession = null;
     _client = null;
 
     await _outputController?.close();
@@ -88,10 +87,7 @@ class SshService {
   Future<String> executeCommand(String command) async {
     if (_client == null) throw Exception('Not connected');
 
-    final channel = _client!.run(command);
-    final output = await channel.stdout.transform(utf8.decoder).join();
-    channel.close();
-
-    return output;
+    final output = await _client!.run(command);
+    return utf8.decode(output);
   }
 }

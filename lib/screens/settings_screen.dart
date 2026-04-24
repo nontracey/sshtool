@@ -237,6 +237,35 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return mode.name;
   }
 
+  Color _getThemeColor(String colorName) {
+    final colors = {
+      'blue': Colors.blue,
+      'indigo': Colors.indigo,
+      'purple': Colors.purple,
+      'pink': Colors.pink,
+      'red': Colors.red,
+      'orange': Colors.orange,
+      'yellow': Colors.amber,
+      'green': Colors.green,
+      'teal': Colors.teal,
+      'cyan': Colors.cyan,
+    };
+    return colors[colorName] ?? Colors.blue;
+  }
+
+  String _getCursorStyleLabel(int style) {
+    switch (style) {
+      case 0:
+        return 'Block';
+      case 1:
+        return 'Underline';
+      case 2:
+        return 'Line';
+      default:
+        return 'Unknown';
+    }
+  }
+
   void _showThemeModeDialog(AppSettings settings) {
     showDialog(
       context: context,

@@ -67,7 +67,7 @@ class ConnectionStatusIndicator extends StatelessWidget {
     }
     return isConnected
         ? Colors.green.shade50
-        : Theme.of(context).colorScheme.surfaceContainerHigh;
+        : Theme.of(context).colorScheme.surfaceContainerHighest;
   }
 
   Color _getTextColor(BuildContext context) {

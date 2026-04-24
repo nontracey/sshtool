@@ -7,13 +7,13 @@ class AppTheme {
     'blue': FlexScheme.blue,
     'indigo': FlexScheme.indigo,
     'purple': FlexScheme.deepPurple,
-    'pink': FlexScheme.pink,
+    'pink': FlexScheme.sakura,
     'red': FlexScheme.red,
-    'orange': FlexScheme.orange,
+    'orange': FlexScheme.amber,
     'yellow': FlexScheme.amber,
     'green': FlexScheme.green,
-    'teal': FlexScheme.teal,
-    'cyan': FlexScheme.cyan,
+    'teal': FlexScheme.tealM3,
+    'cyan': FlexScheme.cyanM3,
   };
 
   static ThemeData getTheme(AppSettings settings) {

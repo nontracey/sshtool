@@ -6,5 +6,5 @@ linter:
     - prefer_const_constructors
     - prefer_const_declarations
     - prefer_final_fields
-    - sort_constructors_first
+    # - sort_constructors_first  # Disabled: conflicts with Flutter conventions
     - use_key_in_widget_constructors

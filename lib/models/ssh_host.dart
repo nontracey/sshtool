@@ -30,6 +30,24 @@ class SshHost {
   })  : createdAt = createdAt ?? DateTime.now(),
         lastConnected = lastConnected ?? DateTime.now();
 
+  factory SshHost.fromJson(Map<String, dynamic> json) {
+    return SshHost(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      host: json['host'] ?? '',
+      port: json['port'] ?? 22,
+      username: json['username'] ?? '',
+      password: json['password'],
+      privateKey: json['privateKey'],
+      group: json['group'] ?? 'default',
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      lastConnected: DateTime.parse(json['lastConnected'] as String),
+      connectionCount: json['connectionCount'] ?? 0,
+      color: json['color'],
+      icon: json['icon'],
+    );
+  }
+
   SshHost copyWith({
     String? id,
     String? name,
@@ -78,23 +96,5 @@ class SshHost {
       'color': color,
       'icon': icon,
     };
-  }
-
-  factory SshHost.fromJson(Map<String, dynamic> json) {
-    return SshHost(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
-      host: json['host'] ?? '',
-      port: json['port'] ?? 22,
-      username: json['username'] ?? '',
-      password: json['password'],
-      privateKey: json['privateKey'],
-      group: json['group'] ?? 'default',
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      lastConnected: DateTime.parse(json['lastConnected'] as String),
-      connectionCount: json['connectionCount'] ?? 0,
-      color: json['color'],
-      icon: json['icon'],
-    );
   }
 }

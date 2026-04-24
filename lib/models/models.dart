@@ -1,5 +1,4 @@
 import 'package:ssh_tool/models/ssh_host.dart';
-import 'package:ssh_tool/models/app_settings.dart';
 
 export 'ssh_host.dart';
 export 'app_settings.dart';

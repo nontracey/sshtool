@@ -37,6 +37,27 @@ class AppSettings {
     this.connectionTimeout = 30,
   });
 
+  factory AppSettings.fromJson(Map<String, dynamic> json) {
+    return AppSettings(
+      themeMode: ThemeMode.values.byName(json['themeMode'] ?? 'system'),
+      themeColor: json['themeColor'] ?? 'blue',
+      fontFamily: json['fontFamily'] ?? 'Roboto',
+      fontSize: (json['fontSize'] as num?)?.toDouble() ?? 14.0,
+      lineHeight: (json['lineHeight'] as num?)?.toDouble() ?? 1.5,
+      cursorStyle: json['cursorStyle'] ?? 0,
+      bellSound: json['bellSound'] ?? true,
+      vibrateOnBell: json['vibrateOnBell'] ?? false,
+      scrollbackLines: json['scrollbackLines'] ?? 10000,
+      keepScreenOn: json['keepScreenOn'] ?? true,
+      fullscreenMode: json['fullscreenMode'] ?? false,
+      terminalFontFamily: json['terminalFontFamily'] ?? 'JetBrainsMono',
+      terminalFontSize: (json['terminalFontSize'] as num?)?.toDouble() ?? 14.0,
+      showLineNumbers: json['showLineNumbers'] ?? false,
+      encoding: json['encoding'] ?? 'UTF-8',
+      connectionTimeout: json['connectionTimeout'] ?? 30,
+    );
+  }
+
   AppSettings copyWith({
     ThemeMode? themeMode,
     String? themeColor,
@@ -94,26 +115,5 @@ class AppSettings {
       'encoding': encoding,
       'connectionTimeout': connectionTimeout,
     };
-  }
-
-  factory AppSettings.fromJson(Map<String, dynamic> json) {
-    return AppSettings(
-      themeMode: ThemeMode.values.byName(json['themeMode'] ?? 'system'),
-      themeColor: json['themeColor'] ?? 'blue',
-      fontFamily: json['fontFamily'] ?? 'Roboto',
-      fontSize: (json['fontSize'] as num?)?.toDouble() ?? 14.0,
-      lineHeight: (json['lineHeight'] as num?)?.toDouble() ?? 1.5,
-      cursorStyle: json['cursorStyle'] ?? 0,
-      bellSound: json['bellSound'] ?? true,
-      vibrateOnBell: json['vibrateOnBell'] ?? false,
-      scrollbackLines: json['scrollbackLines'] ?? 10000,
-      keepScreenOn: json['keepScreenOn'] ?? true,
-      fullscreenMode: json['fullscreenMode'] ?? false,
-      terminalFontFamily: json['terminalFontFamily'] ?? 'JetBrainsMono',
-      terminalFontSize: (json['terminalFontSize'] as num?)?.toDouble() ?? 14.0,
-      showLineNumbers: json['showLineNumbers'] ?? false,
-      encoding: json['encoding'] ?? 'UTF-8',
-      connectionTimeout: json['connectionTimeout'] ?? 30,
-    );
   }
 }

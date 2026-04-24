@@ -202,7 +202,7 @@ class _HostFormDialogState extends State<HostFormDialog> {
           borderRadius: BorderRadius.circular(12),
         ),
         filled: true,
-        fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
+        fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
       validator: validator,
     );

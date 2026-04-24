@@ -121,9 +121,9 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
 
   void _handleKey(LogicalKeyboardKey key) {
     if (!_isConnected) return;
-    
-    String? sequence;
-    
+
+    String sequence;
+
     switch (key) {
       case LogicalKeyboardKey.enter:
         sequence = '\n';
@@ -155,8 +155,8 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
       default:
         return;
     }
-    
-    _sshService.write(sequence!);
+
+    _sshService.write(sequence);
   }
 
   @override
@@ -210,7 +210,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
@@ -310,7 +310,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
               decoration: InputDecoration(
                 hintText: 'Enter command',
                 filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
+                fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
@@ -340,7 +340,8 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen> {
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

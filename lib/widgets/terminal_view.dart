@@ -170,7 +170,7 @@ class _TerminalViewState extends State<TerminalView> {
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         border: Border(
           top: BorderSide(
             color: Theme.of(context).dividerColor,
