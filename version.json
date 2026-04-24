@@ -1,0 +1,79 @@
+{
+  "version": "1.0.0",
+  "buildNumber": 2,
+  "releaseDate": "2026-04-24",
+  "releaseName": "Initial Release",
+  "minSdkVersion": 21,
+  "targetSdkVersion": 34,
+  "platform": "android",
+  
+  "buildVariants": {
+    "debug": {
+      "apkName": "app-debug.apk",
+      "size": "~25MB"
+    },
+    "release": {
+      "apkName": "ssh-tool-v1.0.0.apk",
+      "size": "~10MB",
+      "optimized": true,
+      "proguard": true,
+      "shrinkResources": true
+    },
+    "bundle": {
+      "aabName": "ssh-tool-v1.0.0.aab",
+      "size": "~12MB",
+      "forPlayStore": true
+    }
+  },
+  
+  "features": {
+    "sshHostManagement": true,
+    "sshTerminal": true,
+    "settings": true,
+    "themes": true,
+    "fonts": true,
+    "keyboardShortcuts": true,
+    "commandHistory": true,
+    "hostGroups": true,
+    "colorCoding": true
+  },
+  
+  "authentication": {
+    "password": true,
+    "sshKey": true
+  },
+  
+  "themes": {
+    "modes": ["light", "dark", "system"],
+    "colorSchemes": 10,
+    "customFonts": true
+  },
+  
+  "terminal": {
+    "pty": true,
+    "scrollback": true,
+    "autoScroll": true,
+    "quickActions": true
+  },
+  
+  "storage": {
+    "database": "Hive",
+    "encryption": true,
+    "export": false
+  },
+  
+  "upcoming": {
+    "v1.1.0": [
+      "SFTP file transfer",
+      "SSH key generation",
+      "Snippets",
+      "Export/Import"
+    ],
+    "v1.2.0": [
+      "Port forwarding",
+      "Multi-tab sessions",
+      "Cloud sync",
+      "Biometric auth"
+    ]
+  }
+}
