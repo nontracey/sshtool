@@ -38,9 +38,14 @@ jobs:
 
       - name: Build APK (Debug)
         run: flutter build apk --debug
-        
+
+      - name: Rename APK
+        run: |
+          mkdir -p build/app/outputs/flutter-apk/
+          cp build/app/outputs/flutter-apk/app-debug.apk build/app/outputs/flutter-apk/sshtool-debug.apk
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: sshtool-debug-apk
+          path: build/app/outputs/flutter-apk/sshtool-debug.apk
