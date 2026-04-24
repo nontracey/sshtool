@@ -23,7 +23,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.0'
+          flutter-version: '3.41.0'
           channel: 'stable'
           
       - name: Get dependencies
@@ -38,13 +38,23 @@ jobs:
       - name: Build App Bundle
         run: flutter build appbundle --release
         
+      - name: Check for release notes
+        id: check_notes
+        run: |
+          if [ -f "RELEASE-v${{ github.ref_name }}.md" ]; then
+            echo "has_notes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_notes=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             build/app/outputs/flutter-apk/app-release.apk
             build/app/outputs/bundle/release/app-release.aab
-          body_path: RELEASE-v${{ github.ref_name }}.md
+          body_path: ${{ steps.check_notes.outputs.has_notes == 'true' && format('RELEASE-v{0}.md', github.ref_name) || '' }}
+          body: ${{ steps.check_notes.outputs.has_notes == 'false' && format('Release {0}', github.ref_name) || '' }}
           draft: false
           prerelease: false
         env:
